@@ -1,0 +1,16 @@
+{
+  "name": "ve-design-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "python -m http.server 5173 --bind 127.0.0.1",
+    "dev": "python -m http.server 5173 --bind 127.0.0.1",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "lucide": "1.24.0",
+    "three": "0.185.1",
+    "vite": "^7.0.0"
+  }
+}
