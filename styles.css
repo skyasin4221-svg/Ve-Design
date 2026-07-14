@@ -241,7 +241,7 @@ canvas {
 
 .hero-scene {
   position: absolute;
-  inset: 0 38% 0 0;
+  inset: 0 44% 0 0;
   z-index: 0;
   pointer-events: none;
 }
@@ -255,8 +255,8 @@ canvas {
   position: relative;
   z-index: 4;
   display: grid;
-  grid-template-columns: minmax(440px, 0.95fr) minmax(0, 1fr);
-  gap: 28px;
+  grid-template-columns: minmax(560px, 1.18fr) minmax(320px, 0.82fr);
+  gap: 44px;
   align-items: center;
   justify-items: end;
   min-height: calc(100dvh - 220px);
@@ -266,7 +266,7 @@ canvas {
 .hero-copy {
   grid-column: 2;
   min-width: 0;
-  max-width: 570px;
+  max-width: 500px;
   padding: 34px 0 24px;
 }
 
@@ -292,9 +292,9 @@ p {
 }
 
 h1 {
-  max-width: 620px;
+  max-width: 520px;
   margin-bottom: 22px;
-  font-size: clamp(3rem, 5.2vw, 5.5rem);
+  font-size: clamp(2.9rem, 4.8vw, 5.05rem);
   line-height: 0.95;
   letter-spacing: 0;
   overflow-wrap: break-word;
