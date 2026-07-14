@@ -604,7 +604,6 @@ const initLaptopHero = () => {
     document.documentElement.style.setProperty("--hero-progress", closeTarget.toFixed(4));
     document.documentElement.style.setProperty("--hero-window-opacity", (1 - closeTarget * 0.18).toFixed(3));
     document.documentElement.style.setProperty("--hero-window-up", `${Math.round(closeTarget * -58)}px`);
-    document.documentElement.style.setProperty("--hero-rail-up", `${Math.round(closeTarget * -29)}px`);
     document.documentElement.style.setProperty("--hero-window-right", `${Math.round(closeTarget * 42)}px`);
     document.documentElement.style.setProperty("--hero-window-left", `${Math.round(closeTarget * -34)}px`);
   };
@@ -622,8 +621,8 @@ const initLaptopHero = () => {
       root.position.set(0, -1.08, -0.32);
       root.scale.setScalar(0.62);
     } else {
-      root.position.set(-1.24, -0.04, -0.02);
-      root.scale.setScalar(0.82);
+      root.position.set(0, -0.06, -0.04);
+      root.scale.setScalar(0.66);
     }
   };
 
