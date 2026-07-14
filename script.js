@@ -641,20 +641,20 @@ const initLaptopHero = () => {
     const alignProgress = smoothstep(closeProgress / 0.5);
     const shutProgress = smoothstep((closeProgress - 0.52) / 0.48);
     const hoverAmount = 1 - closeProgress * 0.82;
-    const orbitAmount = Math.sin(alignProgress * Math.PI) * 0.08;
+    const orbitAmount = Math.sin(alignProgress * Math.PI) * 0.04;
 
     lidPivot.rotation.x = THREE.MathUtils.lerp(-0.2, 1.5, shutProgress);
     laptop.rotation.y =
-      THREE.MathUtils.lerp(-0.42, 0.035, alignProgress) +
+      THREE.MathUtils.lerp(0.02, -0.42, alignProgress) +
       orbitAmount +
       currentX * 0.26 * (1 - shutProgress * 0.8) +
       Math.sin(elapsed * 0.22) * 0.01 * hoverAmount;
     laptop.rotation.x =
-      THREE.MathUtils.lerp(0.34, 0.045, alignProgress) +
+      THREE.MathUtils.lerp(0.055, 0.34, alignProgress) +
       currentY * 0.28 * (1 - shutProgress * 0.86) +
       shutProgress * 0.03 +
       Math.sin(elapsed * 0.18) * 0.008 * hoverAmount;
-    laptop.rotation.z = THREE.MathUtils.lerp(-0.035, 0, alignProgress);
+    laptop.rotation.z = THREE.MathUtils.lerp(0, -0.035, alignProgress);
     laptop.position.x = THREE.MathUtils.lerp(-0.28, 0.02, alignProgress);
     laptop.position.y = Math.sin(elapsed * 0.72) * 0.018 * hoverAmount - shutProgress * 0.04;
     accentLines.rotation.z = Math.sin(elapsed * 0.24) * 0.016;
