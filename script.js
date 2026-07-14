@@ -144,7 +144,7 @@ const initFallbackCanvas = () => {
     const cssHeight = canvas.clientHeight;
     context.clearRect(0, 0, cssWidth, cssHeight);
 
-    const centerX = cssWidth * 0.68;
+    const centerX = cssWidth * 0.36;
     const centerY = cssHeight * 0.45;
     const pulse = reducedMotion ? 0 : Math.sin(frame * 0.025) * 8;
 
@@ -599,8 +599,14 @@ const initLaptopHero = () => {
 
   const updateScrollClose = () => {
     const hero = document.querySelector(".hero");
-    const closeDistance = Math.max((hero?.offsetHeight || window.innerHeight) * 1.08, 680);
+    const closeDistance = Math.max((hero?.offsetHeight || window.innerHeight) * 0.88, 640);
     closeTarget = THREE.MathUtils.clamp(window.scrollY / closeDistance, 0, 1);
+    document.documentElement.style.setProperty("--hero-progress", closeTarget.toFixed(4));
+    document.documentElement.style.setProperty("--hero-window-opacity", (1 - closeTarget * 0.18).toFixed(3));
+    document.documentElement.style.setProperty("--hero-window-up", `${Math.round(closeTarget * -58)}px`);
+    document.documentElement.style.setProperty("--hero-rail-up", `${Math.round(closeTarget * -29)}px`);
+    document.documentElement.style.setProperty("--hero-window-right", `${Math.round(closeTarget * 42)}px`);
+    document.documentElement.style.setProperty("--hero-window-left", `${Math.round(closeTarget * -34)}px`);
   };
 
   window.addEventListener("scroll", updateScrollClose, { passive: true });
@@ -613,11 +619,11 @@ const initLaptopHero = () => {
     camera.updateProjectionMatrix();
 
     if (rect.width < 760) {
-      root.position.set(0.2, -0.72, -0.3);
-      root.scale.setScalar(0.54);
+      root.position.set(0, -1.08, -0.32);
+      root.scale.setScalar(0.62);
     } else {
-      root.position.set(1.78, -0.06, -0.05);
-      root.scale.setScalar(0.67);
+      root.position.set(-1.24, -0.04, -0.02);
+      root.scale.setScalar(0.82);
     }
   };
 
@@ -633,22 +639,25 @@ const initLaptopHero = () => {
     currentX += (targetX - currentX) * 0.055;
     currentY += (targetY - currentY) * 0.055;
     closeProgress += (closeTarget - closeProgress) * 0.075;
-    const alignProgress = smoothstep(closeProgress / 0.44);
-    const shutProgress = smoothstep((closeProgress - 0.38) / 0.62);
+    const alignProgress = smoothstep(closeProgress / 0.5);
+    const shutProgress = smoothstep((closeProgress - 0.52) / 0.48);
     const hoverAmount = 1 - closeProgress * 0.82;
+    const orbitAmount = Math.sin(alignProgress * Math.PI) * 0.08;
 
-    lidPivot.rotation.x = THREE.MathUtils.lerp(-0.18, 1.48, shutProgress);
+    lidPivot.rotation.x = THREE.MathUtils.lerp(-0.2, 1.5, shutProgress);
     laptop.rotation.y =
-      THREE.MathUtils.lerp(-0.055, 0, alignProgress) +
+      THREE.MathUtils.lerp(-0.42, 0.035, alignProgress) +
+      orbitAmount +
       currentX * 0.26 * (1 - shutProgress * 0.8) +
       Math.sin(elapsed * 0.22) * 0.01 * hoverAmount;
     laptop.rotation.x =
-      THREE.MathUtils.lerp(0.2, 0.035, alignProgress) +
+      THREE.MathUtils.lerp(0.34, 0.045, alignProgress) +
       currentY * 0.28 * (1 - shutProgress * 0.86) +
       shutProgress * 0.03 +
       Math.sin(elapsed * 0.18) * 0.008 * hoverAmount;
-    laptop.rotation.z = THREE.MathUtils.lerp(0.01, 0, alignProgress);
-    laptop.position.y = Math.sin(elapsed * 0.72) * 0.018 * hoverAmount - shutProgress * 0.02;
+    laptop.rotation.z = THREE.MathUtils.lerp(-0.035, 0, alignProgress);
+    laptop.position.x = THREE.MathUtils.lerp(-0.28, 0.02, alignProgress);
+    laptop.position.y = Math.sin(elapsed * 0.72) * 0.018 * hoverAmount - shutProgress * 0.04;
     accentLines.rotation.z = Math.sin(elapsed * 0.24) * 0.016;
     accentLines.material.opacity = 0.28 * (1 - shutProgress * 0.54);
     screenMaterial.opacity = 0.97 - shutProgress * 0.54;
