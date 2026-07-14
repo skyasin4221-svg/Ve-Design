@@ -199,7 +199,7 @@ const initLaptopHero = () => {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-  camera.position.set(0, 0.12, 6.35);
+  camera.position.set(0, 0.1, 6.1);
 
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -602,6 +602,7 @@ const initLaptopHero = () => {
     const closeDistance = Math.max((hero?.offsetHeight || window.innerHeight) * 0.88, 640);
     closeTarget = THREE.MathUtils.clamp(window.scrollY / closeDistance, 0, 1);
     document.documentElement.style.setProperty("--hero-progress", closeTarget.toFixed(4));
+    document.documentElement.style.setProperty("--hero-icon-opacity", (0.92 - closeTarget * 0.28).toFixed(3));
     document.documentElement.style.setProperty("--hero-window-opacity", (1 - closeTarget * 0.18).toFixed(3));
     document.documentElement.style.setProperty("--hero-window-up", `${Math.round(closeTarget * -58)}px`);
     document.documentElement.style.setProperty("--hero-window-right", `${Math.round(closeTarget * 42)}px`);
@@ -619,10 +620,10 @@ const initLaptopHero = () => {
 
     if (rect.width < 760) {
       root.position.set(0, -1.08, -0.32);
-      root.scale.setScalar(0.62);
+      root.scale.setScalar(0.68);
     } else {
-      root.position.set(0, -0.06, -0.04);
-      root.scale.setScalar(0.66);
+      root.position.set(0.04, -0.04, -0.04);
+      root.scale.setScalar(0.82);
     }
   };
 
@@ -655,7 +656,7 @@ const initLaptopHero = () => {
       shutProgress * 0.03 +
       Math.sin(elapsed * 0.18) * 0.008 * hoverAmount;
     laptop.rotation.z = THREE.MathUtils.lerp(0, -0.035, alignProgress);
-    laptop.position.x = THREE.MathUtils.lerp(-0.28, 0.02, alignProgress);
+    laptop.position.x = THREE.MathUtils.lerp(-0.18, 0.08, alignProgress);
     laptop.position.y = Math.sin(elapsed * 0.72) * 0.018 * hoverAmount - shutProgress * 0.04;
     accentLines.rotation.z = Math.sin(elapsed * 0.24) * 0.016;
     accentLines.material.opacity = 0.28 * (1 - shutProgress * 0.54);
