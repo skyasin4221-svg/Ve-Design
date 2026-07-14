@@ -30,7 +30,16 @@ const updateHeader = () => {
   header?.classList.toggle("is-scrolled", window.scrollY > 20);
 };
 
-window.addEventListener("scroll", updateHeader, { passive: true });
+let headerFrame = 0;
+const requestHeaderUpdate = () => {
+  if (headerFrame) return;
+  headerFrame = requestAnimationFrame(() => {
+    headerFrame = 0;
+    updateHeader();
+  });
+};
+
+window.addEventListener("scroll", requestHeaderUpdate, { passive: true });
 updateHeader();
 
 const revealItems = document.querySelectorAll(".reveal");
@@ -212,7 +221,7 @@ const initLaptopHero = () => {
     powerPreference: "high-performance",
   });
   canvas.closest(".hero-scene")?.classList.add("is-3d-ready");
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.setClearColor(0xffffff, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -591,6 +600,18 @@ const initLaptopHero = () => {
   let currentY = 0;
   let closeTarget = 0;
   let closeProgress = 0;
+  let heroIsVisible = true;
+
+  const heroElement = document.querySelector(".hero");
+  if ("IntersectionObserver" in window && heroElement) {
+    const heroObserver = new IntersectionObserver(
+      ([entry]) => {
+        heroIsVisible = entry.isIntersecting;
+      },
+      { rootMargin: "180px 0px" }
+    );
+    heroObserver.observe(heroElement);
+  }
 
   window.addEventListener(
     "pointermove",
@@ -614,7 +635,16 @@ const initLaptopHero = () => {
     document.documentElement.style.setProperty("--hero-window-left", `${Math.round(closeTarget * -34)}px`);
   };
 
-  window.addEventListener("scroll", updateScrollClose, { passive: true });
+  let closeFrame = 0;
+  const requestScrollClose = () => {
+    if (closeFrame) return;
+    closeFrame = requestAnimationFrame(() => {
+      closeFrame = 0;
+      updateScrollClose();
+    });
+  };
+
+  window.addEventListener("scroll", requestScrollClose, { passive: true });
   updateScrollClose();
 
   const resize = () => {
@@ -639,6 +669,12 @@ const initLaptopHero = () => {
   };
 
   const render = () => {
+    if (!reducedMotion) {
+      requestAnimationFrame(render);
+    }
+
+    if (!heroIsVisible) return;
+
     const elapsed = clock.getElapsedTime();
 
     currentX += (targetX - currentX) * 0.055;
@@ -671,10 +707,6 @@ const initLaptopHero = () => {
 
     drawScreen(elapsed, shutProgress);
     renderer.render(scene, camera);
-
-    if (!reducedMotion) {
-      requestAnimationFrame(render);
-    }
   };
 
   resize();
