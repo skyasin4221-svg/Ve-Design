@@ -35,6 +35,10 @@ updateHeader();
 
 const revealItems = document.querySelectorAll(".reveal");
 
+revealItems.forEach((item, index) => {
+  item.style.setProperty("--reveal-delay", `${Math.min((index % 6) * 55, 275)}ms`);
+});
+
 if (reducedMotion) {
   revealItems.forEach((item) => item.classList.add("is-visible"));
 } else {
@@ -199,7 +203,7 @@ const initLaptopHero = () => {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-  camera.position.set(0, 0.1, 6.1);
+  camera.position.set(0, 0.08, 5.75);
 
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -207,6 +211,7 @@ const initLaptopHero = () => {
     antialias: true,
     powerPreference: "high-performance",
   });
+  canvas.closest(".hero-scene")?.classList.add("is-3d-ready");
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setClearColor(0xffffff, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -620,10 +625,10 @@ const initLaptopHero = () => {
 
     if (rect.width < 760) {
       root.position.set(0, -1.08, -0.32);
-      root.scale.setScalar(0.68);
+      root.scale.setScalar(0.78);
     } else {
-      root.position.set(0.04, -0.04, -0.04);
-      root.scale.setScalar(0.82);
+      root.position.set(-0.02, -0.02, -0.04);
+      root.scale.setScalar(1.08);
     }
   };
 
