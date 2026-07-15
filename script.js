@@ -660,8 +660,8 @@ const initLaptopHero = () => {
       root.position.set(0.02, 0.02, -0.32);
       root.scale.setScalar(0.68);
     } else {
-      root.position.set(0.22, -0.04, -0.04);
-      root.scale.setScalar(1.02);
+      root.position.set(-0.92, -0.04, -0.04);
+      root.scale.setScalar(1.12);
     }
   };
 
