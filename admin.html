@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; form-action 'self' mailto: https://wa.me; upgrade-insecure-requests"
+    />
+    <title>VE Design Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="admin-body">
+    <main class="admin-shell">
+      <section class="admin-login" data-admin-login>
+        <div class="admin-brand">
+          <img class="brand-logo" src="./assets/brand/ve-logo.png" alt="" />
+          <span>VE Design Admin</span>
+        </div>
+        <form class="admin-login-card" data-admin-login-form>
+          <div class="admin-card-heading">
+            <p class="eyebrow">Secure area</p>
+            <h1>Admin Login</h1>
+          </div>
+          <div class="form-row">
+            <label for="admin-username">Username</label>
+            <input id="admin-username" name="username" type="text" autocomplete="username" required />
+          </div>
+          <div class="form-row">
+            <label for="admin-password">Password</label>
+            <input id="admin-password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <button class="button button-primary form-submit" type="submit">
+            <span>Login</span>
+            <i data-lucide="lock-keyhole" aria-hidden="true"></i>
+          </button>
+          <p class="form-status" data-login-status aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="admin-dashboard" data-admin-dashboard hidden>
+        <header class="admin-topbar">
+          <div class="admin-brand">
+            <img class="brand-logo" src="./assets/brand/ve-logo.png" alt="" />
+            <span>VE Design Admin</span>
+          </div>
+          <button class="button button-secondary admin-logout" type="button" data-admin-logout>
+            <span>Logout</span>
+            <i data-lucide="log-out" aria-hidden="true"></i>
+          </button>
+        </header>
+
+        <section class="admin-stats" aria-label="Brief stats">
+          <article>
+            <span data-stat-total>0</span>
+            <p>Total briefs</p>
+          </article>
+          <article>
+            <span data-stat-new>0</span>
+            <p>New</p>
+          </article>
+          <article>
+            <span data-stat-replied>0</span>
+            <p>Replied</p>
+          </article>
+        </section>
+
+        <section class="admin-grid">
+          <aside class="admin-panel">
+            <div class="admin-panel-title">
+              <h2>Inbox</h2>
+              <button class="admin-icon-button" type="button" data-export-briefs aria-label="Export briefs">
+                <i data-lucide="download" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="admin-filters">
+              <select data-filter-status aria-label="Filter by status">
+                <option value="all">All statuses</option>
+                <option value="New">New</option>
+                <option value="Reviewing">Reviewing</option>
+                <option value="Replied">Replied</option>
+              </select>
+              <select data-filter-medium aria-label="Filter by medium">
+                <option value="all">All mediums</option>
+                <option value="email">Email</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="instagram">Instagram</option>
+                <option value="tiktok">TikTok</option>
+              </select>
+            </div>
+            <div class="admin-brief-list" data-brief-list></div>
+          </aside>
+
+          <section class="admin-panel admin-detail" data-brief-detail>
+            <div class="admin-empty">
+              <i data-lucide="inbox" aria-hidden="true"></i>
+              <p>Select a brief</p>
+            </div>
+          </section>
+        </section>
+
+        <section class="admin-panel admin-settings">
+          <div class="admin-panel-title">
+            <h2>Automated Replies</h2>
+            <span data-settings-status></span>
+          </div>
+          <label class="admin-toggle">
+            <input type="checkbox" data-auto-reply-enabled />
+            <span>Enable auto reply after form submit</span>
+          </label>
+          <div class="form-row">
+            <label for="auto-reply-template">Reply template</label>
+            <textarea id="auto-reply-template" data-auto-reply-template rows="4"></textarea>
+          </div>
+          <button class="button button-primary" type="button" data-save-settings>
+            <span>Save Reply Settings</span>
+            <i data-lucide="save" aria-hidden="true"></i>
+          </button>
+        </section>
+      </section>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "lucide": "./node_modules/lucide/dist/esm/lucide.mjs"
+        }
+      }
+    </script>
+    <script type="module" src="admin.js"></script>
+  </body>
+</html>

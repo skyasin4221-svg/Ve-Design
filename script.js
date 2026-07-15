@@ -1,6 +1,15 @@
 import { createIcons, icons } from "lucide";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
+import {
+  addBrief,
+  fillTemplate,
+  getAdminSettings,
+  makeBriefMessage,
+  makeMailtoUrl,
+  makeWhatsAppUrl,
+  BUSINESS_EMAIL,
+} from "./brief-store.js";
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -86,16 +95,71 @@ tiltCards.forEach((card) => {
 
 const contactForm = document.querySelector("[data-contact-form]");
 const formStatus = document.querySelector("[data-form-status]");
+const mediumSelect = contactForm?.querySelector("#medium");
+const phoneInput = contactForm?.querySelector("#phone");
+
+const updatePhoneRequirement = () => {
+  if (!phoneInput || !mediumSelect) return;
+  const needsPhone = mediumSelect.value === "whatsapp";
+  phoneInput.required = needsPhone;
+  phoneInput.setAttribute("aria-required", String(needsPhone));
+};
+
+mediumSelect?.addEventListener("change", updatePhoneRequirement);
+updatePhoneRequirement();
 
 contactForm?.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const formData = new FormData(contactForm);
-  const name = String(formData.get("name") || "").trim();
-  const service = String(formData.get("service") || "").trim();
+  const brief = {
+    name: String(formData.get("name") || "").trim(),
+    email: String(formData.get("email") || "").trim(),
+    phone: String(formData.get("phone") || "").trim(),
+    medium: String(formData.get("medium") || "").trim(),
+    service: String(formData.get("service") || "").trim(),
+    message: String(formData.get("message") || "").trim(),
+  };
 
-  formStatus.textContent = `${name || "Thanks"}, your ${service || "project"} brief is ready for review.`;
+  if (brief.medium === "whatsapp" && !brief.phone) {
+    formStatus.textContent = "Add a WhatsApp number so VE Design can reply there.";
+    phoneInput?.focus();
+    return;
+  }
+
+  const savedBrief = addBrief(brief);
+  const settings = getAdminSettings();
+  const autoReply = settings.autoReplyEnabled ? fillTemplate(settings.autoReplyTemplate, savedBrief) : "";
+  const briefMessage = makeBriefMessage(savedBrief);
+  let redirectUrl = "";
+  let mediumLabel = "admin inbox";
+
+  if (savedBrief.medium === "whatsapp") {
+    redirectUrl = makeWhatsAppUrl(briefMessage);
+    mediumLabel = "WhatsApp";
+  } else if (savedBrief.medium === "email") {
+    redirectUrl = makeMailtoUrl(BUSINESS_EMAIL, `New ${savedBrief.service || "project"} brief`, briefMessage);
+    mediumLabel = "email";
+  } else if (savedBrief.medium === "instagram") {
+    navigator.clipboard?.writeText?.(briefMessage)?.catch?.(() => {});
+    redirectUrl = "https://www.instagram.com/vedesign.uk?igsh=Y3RjMnZpMGtnZ3B3";
+    mediumLabel = "Instagram";
+  } else if (savedBrief.medium === "tiktok") {
+    navigator.clipboard?.writeText?.(briefMessage)?.catch?.(() => {});
+    redirectUrl = "https://www.tiktok.com/@ve.design67?_r=1&_t=ZN-980v9yMf3NW";
+    mediumLabel = "TikTok";
+  }
+
+  formStatus.textContent = autoReply || `${savedBrief.name || "Thanks"}, your ${savedBrief.service || "project"} brief is saved. Opening ${mediumLabel}.`;
+
+  if (redirectUrl) {
+    window.setTimeout(() => {
+      window.open(redirectUrl, "_blank", "noopener,noreferrer");
+    }, 450);
+  }
+
   contactForm.reset();
+  updatePhoneRequirement();
 });
 
 const floatWindows = document.querySelectorAll("[data-float-window]");
