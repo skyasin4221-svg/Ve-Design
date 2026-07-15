@@ -654,14 +654,14 @@ const initLaptopHero = () => {
     camera.updateProjectionMatrix();
 
     if (rect.width < 520) {
-      root.position.set(0.02, -0.9, -0.36);
-      root.scale.setScalar(0.5);
+      root.position.set(-0.24, 0.14, -0.34);
+      root.scale.setScalar(0.54);
     } else if (rect.width < 760) {
-      root.position.set(0.04, -0.92, -0.34);
-      root.scale.setScalar(0.62);
+      root.position.set(0.02, 0.02, -0.32);
+      root.scale.setScalar(0.68);
     } else {
-      root.position.set(0.06, -0.04, -0.04);
-      root.scale.setScalar(0.84);
+      root.position.set(0.22, -0.04, -0.04);
+      root.scale.setScalar(1.02);
     }
   };
 
