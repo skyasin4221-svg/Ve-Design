@@ -54,6 +54,8 @@ body {
   margin: 0;
   min-width: 320px;
   background:
+    radial-gradient(circle at 88% 18%, rgba(255, 95, 31, 0.16), transparent 360px),
+    radial-gradient(circle at 10% 46%, rgba(52, 68, 74, 0.13), transparent 320px),
     linear-gradient(180deg, rgba(255, 255, 255, 0.88), transparent 620px),
     repeating-linear-gradient(90deg, rgba(23, 18, 15, 0.045) 0 1px, transparent 1px 110px),
     repeating-linear-gradient(0deg, rgba(23, 18, 15, 0.026) 0 1px, transparent 1px 110px),
@@ -257,6 +259,7 @@ canvas {
   z-index: -2;
   background:
     radial-gradient(circle at 24% 55%, rgba(255, 95, 31, 0.24), transparent 28%),
+    radial-gradient(circle at 58% 30%, rgba(52, 68, 74, 0.16), transparent 24%),
     linear-gradient(90deg, rgba(246, 243, 237, 0.44) 0%, rgba(255, 248, 238, 0.5) 42%, rgba(255, 255, 255, 0.94) 68%, rgba(255, 249, 242, 0.96) 100%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(246, 243, 237, 0.42)),
     url("./assets/work/hero-studio-background-v2.jpg") center / cover no-repeat;
@@ -275,7 +278,7 @@ canvas {
 
 .hero-scene {
   position: absolute;
-  inset: 86px 43% 86px -3vw;
+  inset: 92px 51% 118px clamp(18px, 3.2vw, 58px);
   z-index: 3;
   pointer-events: none;
 }
@@ -437,7 +440,6 @@ canvas {
   background: linear-gradient(145deg, rgba(23, 18, 15, 0.88), rgba(55, 34, 22, 0.7));
   color: var(--orange);
   box-shadow: 0 18px 42px rgba(37, 25, 16, 0.2), 0 0 28px rgba(255, 95, 31, 0.28);
-  backdrop-filter: blur(18px);
   opacity: var(--hero-icon-opacity, 0.92);
   animation: floatIcon 7s ease-in-out infinite;
   will-change: transform, opacity;
@@ -568,6 +570,49 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.hero-service-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.hero-service-strip span {
+  min-height: 34px;
+  padding: 8px 11px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(23, 18, 15, 0.12);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.86);
+  font-size: 0.8rem;
+  font-weight: 900;
+  box-shadow: 0 14px 28px rgba(37, 25, 16, 0.08);
+}
+
+.hero-service-strip span[data-tone="orange"] {
+  border-color: rgba(255, 95, 31, 0.4);
+  background: var(--orange);
+  color: #120500;
+}
+
+.hero-service-strip span[data-tone="dark"] {
+  border-color: rgba(255, 122, 0, 0.3);
+  background: #17120f;
+  color: #fff7ef;
+}
+
+.hero-service-strip span[data-tone="blue"] {
+  background: var(--blue-gray);
+  color: #ffffff;
+}
+
+.hero-service-strip span[data-tone="light"] {
+  border-color: rgba(255, 95, 31, 0.3);
+  color: var(--orange);
 }
 
 .hero-windows {
@@ -932,9 +977,10 @@ h3 {
 .timeline {
   border: 1px solid var(--surface-border);
   border-radius: var(--radius);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 248, 238, 0.78));
+  background:
+    radial-gradient(circle at 14% 0%, rgba(255, 95, 31, 0.1), transparent 160px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 248, 238, 0.86));
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(18px);
 }
 
 .service-card,
@@ -966,6 +1012,18 @@ h3 {
 .service-card {
   min-height: 430px;
   padding: 18px;
+}
+
+.service-card:nth-child(3n + 1) {
+  border-color: rgba(255, 95, 31, 0.26);
+}
+
+.service-card:nth-child(3n + 2) {
+  border-color: rgba(52, 68, 74, 0.26);
+}
+
+.service-card:nth-child(3n) {
+  border-color: rgba(255, 138, 34, 0.3);
 }
 
 .service-media {
@@ -1149,7 +1207,6 @@ h3 {
   border: 1px solid var(--surface-border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(18px);
 }
 
 .process-panel-top {
@@ -1551,8 +1608,11 @@ h3 {
   }
 
   .hero-scene {
-    inset: 280px 0 0;
-    filter: drop-shadow(0 28px 48px rgba(23, 18, 15, 0.22));
+    inset: 320px 18px 110px;
+  }
+
+  .hero-canvas {
+    min-height: 430px;
   }
 
   .hero-copy {
@@ -1603,12 +1663,17 @@ h3 {
   }
 
   .hero {
-    min-height: auto;
+    min-height: 960px;
     padding-top: 104px;
   }
 
   .hero-scene {
-    opacity: 0.72;
+    inset: 392px 8px 98px;
+    opacity: 0.98;
+  }
+
+  .hero-canvas {
+    min-height: 360px;
   }
 
   h1 {
@@ -1631,7 +1696,7 @@ h3 {
     min-height: 820px;
     align-items: start;
     justify-items: start;
-    padding-bottom: 380px;
+    padding-bottom: 430px;
   }
 
   .hero-actions,

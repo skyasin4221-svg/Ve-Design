@@ -653,12 +653,15 @@ const initLaptopHero = () => {
     camera.aspect = rect.width / Math.max(rect.height, 1);
     camera.updateProjectionMatrix();
 
-    if (rect.width < 760) {
-      root.position.set(0, -1.08, -0.32);
-      root.scale.setScalar(0.78);
+    if (rect.width < 520) {
+      root.position.set(0.02, -0.9, -0.36);
+      root.scale.setScalar(0.5);
+    } else if (rect.width < 760) {
+      root.position.set(0.04, -0.92, -0.34);
+      root.scale.setScalar(0.62);
     } else {
-      root.position.set(-0.02, -0.02, -0.04);
-      root.scale.setScalar(1.08);
+      root.position.set(0.06, -0.04, -0.04);
+      root.scale.setScalar(0.84);
     }
   };
 
