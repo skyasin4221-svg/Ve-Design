@@ -93,6 +93,18 @@ canvas {
   max-width: 100%;
 }
 
+.service-card,
+.work-card,
+.package-card,
+.contact-form,
+.timeline,
+.process-panel,
+.process-tile,
+.timeline-item {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .skip-link,
 .sr-only {
   position: absolute;
@@ -946,6 +958,27 @@ h3 {
     inset 0 -1px 0 rgba(255, 95, 31, 0.34);
 }
 
+.marquee-band::before,
+.marquee-band::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 28px;
+  pointer-events: none;
+}
+
+.marquee-band::before {
+  left: 0;
+  background: linear-gradient(90deg, #120906, rgba(18, 9, 6, 0));
+}
+
+.marquee-band::after {
+  right: 0;
+  background: linear-gradient(270deg, #120906, rgba(18, 9, 6, 0));
+}
+
 .marquee-track {
   width: max-content;
   display: flex;
@@ -1121,6 +1154,8 @@ h3 {
 
 .service-card li,
 .package-card li {
+  min-width: 0;
+  max-width: 100%;
   padding: 6px 8px;
   border: 1px solid rgba(23, 18, 15, 0.1);
   border-radius: var(--radius);
@@ -1128,6 +1163,7 @@ h3 {
   background: rgba(255, 95, 31, 0.075);
   font-size: 0.76rem;
   line-height: 1.1;
+  overflow-wrap: anywhere;
 }
 
 .work-section {
@@ -1938,6 +1974,7 @@ h3 {
 
   .hero-copy {
     grid-column: 1;
+    width: 100%;
     max-width: 720px;
   }
 
@@ -1987,6 +2024,7 @@ h3 {
   .hero {
     min-height: 980px;
     padding-top: 104px;
+    overflow-x: clip;
   }
 
   .hero-scene {
@@ -2042,9 +2080,32 @@ h3 {
     white-space: normal;
   }
 
+  .hero-copy {
+    width: 100%;
+    padding: 26px 0 20px;
+  }
+
+  .hero-copy::before {
+    inset: -12px 0 -14px;
+    border-radius: var(--radius);
+  }
+
   .hero-text {
     max-width: 100%;
     overflow-wrap: break-word;
+  }
+
+  .hero-service-strip,
+  .hero-actions {
+    max-width: 100%;
+  }
+
+  .hero-service-strip span {
+    max-width: 100%;
+  }
+
+  .hero-actions .button {
+    min-width: 0;
   }
 
   .hero-grid {
@@ -2052,7 +2113,7 @@ h3 {
     min-height: 850px;
     align-items: start;
     justify-items: start;
-    overflow: hidden;
+    overflow: visible;
     padding-bottom: 470px;
   }
 
@@ -2108,6 +2169,16 @@ h3 {
 
   .services-grid,
   .work-grid,
+  .packages-grid,
+  .process-tile-grid,
+  .split-layout,
+  .contact-grid {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .services-grid,
+  .work-grid,
   .packages-grid {
     grid-template-columns: 1fr;
   }
@@ -2118,7 +2189,36 @@ h3 {
 
   .service-card,
   .package-card {
+    width: 100%;
     min-height: auto;
+  }
+
+  .work-card,
+  .contact-form,
+  .timeline {
+    width: 100%;
+  }
+
+  .service-card li,
+  .package-card li {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .process-tile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .process-tile {
+    min-height: 76px;
+  }
+
+  .process-panel-top::before {
+    right: -18px;
+  }
+
+  .process-panel-top::after {
+    right: 14px;
   }
 
   .work-visual {
